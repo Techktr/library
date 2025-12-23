@@ -1,4 +1,4 @@
 package com.example.library.controller;
 
-public class libraryController {
+public class LivreController {
 }
