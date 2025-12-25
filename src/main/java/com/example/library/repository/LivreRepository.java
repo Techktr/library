@@ -1,4 +1,4 @@
 package com.example.library.repository;
 
-public class LivreRpository {
+public class LivreRepository {
 }
