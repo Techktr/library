@@ -6,6 +6,9 @@ import com.example.library.repository.LivreRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,7 +24,7 @@ public class LivreServiceTest {
     public void setUp() {
         livreRepository = mock(LivreRepository.class);
         livreService = new LivreService(livreRepository);
-        livreDTO = new LivreDTO("Clean Code", "Robert Martin");
+        livreDTO = new LivreDTO("Clean Code", "Robert Martin", "ISBN-13. 978-0132350884", Date.from(Instant.now()), "Informatique", "Si un code «sale» peut fonctionner, il peut également remettre en question la pérennité d'une entreprise de développement de logiciels. Chaque année, du temps et des ressources sont gaspillés à cause d'un code mal écrit.",true);
 
         when(livreRepository.save(any(Livre.class))).thenAnswer(i -> i.getArguments()[0]);
     }
@@ -37,7 +40,7 @@ public class LivreServiceTest {
     @Test
     public void shouldGeneratedUniqueID(){
 
-        Livre result = livreService.createBook(new LivreDTO("Clean Code", "Robert Martin"));
+        Livre result = livreService.createBook(new LivreDTO("Clean Code", "Robert Martin", "ISBN-13. 978-0132350884", Date.from(Instant.now()), "Informatique", "Si un code «sale» peut fonctionner, il peut également remettre en question la pérennité d'une entreprise de développement de logiciels. Chaque année, du temps et des ressources sont gaspillés à cause d'un code mal écrit.",true));
 
         assertNotNull(result.getUuid());
     }
@@ -59,4 +62,5 @@ public class LivreServiceTest {
 
         verify(livreRepository).save(any(Livre.class));
     }
+
 }
