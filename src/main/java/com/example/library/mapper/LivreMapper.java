@@ -2,11 +2,11 @@ package com.example.library.mapper;
 
 import com.example.library.dto.LivreDTO;
 import com.example.library.model.Livre;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class LivreMapper {
 
     public LivreMapper() {}

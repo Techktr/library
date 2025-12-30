@@ -20,7 +20,6 @@ public class LivreService {
 
     public LivreDTO save(LivreDTO livreDTO) {
         Livre livre = livreMapper.toEntity(livreDTO);
-        // L'UUID doit être généré ICI si pas déjà fait
         if (livre.getUuid() == null) {
             livre.setUuid(UUID.randomUUID());
         }
@@ -35,10 +34,6 @@ public class LivreService {
 
     public List<LivreDTO> findAll() {
         return livreMapper.toDtos(livreRepository.findAll());
-    }
-
-    public List<LivreDTO> findByAuteur(String auteur) {
-        return livreMapper.toDtos(livreRepository.findByAuteur(auteur));
     }
 
     public void deleteById(UUID id) {
