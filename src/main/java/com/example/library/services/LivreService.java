@@ -4,24 +4,44 @@ import com.example.library.dto.LivreDTO;
 import com.example.library.mapper.LivreMapper;
 import com.example.library.model.Livre;
 import com.example.library.repository.LivreRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
+@RequiredArgsConstructor
 public class LivreService {
 
     private final LivreRepository livreRepository;
+    private final LivreMapper livreMapper;
 
-    private final LivreMapper livreMapper =  new LivreMapper();
-
-    public LivreService(LivreRepository livreRepository) {
-        this.livreRepository = livreRepository;
+    public LivreDTO save(LivreDTO livreDTO) {
+        Livre livre = livreMapper.toEntity(livreDTO);
+        // L'UUID doit être généré ICI si pas déjà fait
+        if (livre.getUuid() == null) {
+            livre.setUuid(UUID.randomUUID());
+        }
+        Livre saved = livreRepository.save(livre);
+        return livreMapper.toDto(saved);
     }
 
-    public Livre createBook(LivreDTO livreDTO) {
-        return livreRepository.save(livreMapper.map(livreDTO));
+    public Optional<LivreDTO> findById(UUID id) {
+        return livreRepository.findById(id)
+                .map(livreMapper::toDto);
     }
 
-    public Livre saveBook(LivreDTO livreDTO) {
-        return livreRepository.save(livreMapper.map(livreDTO));
+    public List<LivreDTO> findAll() {
+        return livreMapper.toDtos(livreRepository.findAll());
+    }
+
+    public List<LivreDTO> findByAuteur(String auteur) {
+        return livreMapper.toDtos(livreRepository.findByAuteur(auteur));
+    }
+
+    public void deleteById(UUID id) {
+        livreRepository.deleteById(id);
     }
 }
